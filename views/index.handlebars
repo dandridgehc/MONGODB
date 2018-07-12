@@ -1,0 +1,43 @@
+<button id="scrape">SCRAPE</button>
+
+{{#each items}}
+
+   <h3>
+   {{title}} <button id="save" info="{{_id}}">SAVE</button></h3>
+   <p> 
+   <a href="{{link}}">{{link}}</a>
+   
+   <br>
+   {{summary}}
+   </p>
+
+   
+
+{{/each}}
+
+<script>
+    $("#scrape").on("click", function(){
+        $.get("/scrape", function(response){
+            console.log(response)
+            location.reload()
+        })
+    })
+
+//delegated event
+    $(document).on("click", "#save", function(){
+
+            var id = $(this).attr("info")
+
+            console.log(id)
+        {{!-- $.get("/scrape", function(response){
+            console.log(response)
+            location.reload()
+        }) --}}
+    })
+</script>
+
+// pass the id from post request to a post route in your server
+// the post route in the server will take the id and update the article saved boolean
+//make another route at /saved that renders all saved articles (another handlebar page)
+//loop through and only display saved
+

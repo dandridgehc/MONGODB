@@ -3,13 +3,23 @@ var app = express()
 var mongoose = require("mongoose")
 var request = require("request")
 var cheerio = require("cheerio")
+//imports articlemodel.js file
+var Article = require("./ArticleModel")
 
+var exhbs = require("express-handlebars")
+
+//use handlebars
+app.engine("handlebars",exhbs({
+    defaultLayout: "main"
+}))
+
+app.set("view engine", "handlebars")
 var port = process.env.PORT || 3000
 
-//route root level
-app.get("/",function(req,res){
-    res.send("App is Working")
-})
+//route root level testing
+// app.get("/",function(req,res){
+//     res.send("App is Working")
+// })
 
 //route that will scrape NY Times
 app.get("/scrape",function(req,res){
@@ -24,7 +34,13 @@ app.get("/scrape",function(req,res){
             
             if(title && link && summary) {
                 array.push({title: title, link: link, summary: summary})
-
+                var article = new Article({
+                    title: title, 
+                    link: link,
+                    summary: summary,
+                    saved:false
+                })
+                article.save()
             }
 
         })
@@ -32,6 +48,32 @@ app.get("/scrape",function(req,res){
     }) 
 })
 
+
+app.get("/",function(req,res){
+    Article.find()
+    .exec()
+    .then(function(data){
+        res.render("index",{
+            items:data
+        })
+    }) 
+})
+
+app.get("/clear",function(req,res){
+    Article.remove()
+    .exec()
+    .then(function(data){
+        res.send(data)
+    })
+})
+
+app.get("/all",function(req,res){
+    Article.find()
+    .exec()
+    .then(function(data){
+        res.send(data)
+    }) 
+})
 
 
 
