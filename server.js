@@ -1,27 +1,33 @@
+// REQUIRE IN ALL PACKAGES
+
 var express = require("express")
 var app = express()
 var mongoose = require("mongoose")
 var request = require("request")
 var cheerio = require("cheerio")
+
 //imports articlemodel.js file
 var Article = require("./ArticleModel")
 
-var exhbs = require("express-handlebars")
 
-//use handlebars
+var exhbs = require("express-handlebars")
+// **NEED TO USE HANDLEBARS/ HOW HANDLEBARS IS CONNECTED** SETS DEFAULT TO MAIN.HANDLEBARS IN VIEWS/LAYOUTS
 app.engine("handlebars",exhbs({
     defaultLayout: "main"
 }))
-
 app.set("view engine", "handlebars")
 var port = process.env.PORT || 3000
+
+
 
 //route root level testing
 // app.get("/",function(req,res){
 //     res.send("App is Working")
 // })
 
-//route that will scrape NY Times
+
+
+//route that will scrape NY Times when scrape button pushed
 app.get("/scrape",function(req,res){
     request("https://www.nytimes.com/", function(error, response, html){   
         //res.send(html)
@@ -32,6 +38,7 @@ app.get("/scrape",function(req,res){
             var link = $(this).children("a").attr("href")
             var summary = $(this).siblings("p").text()
             
+            //saves scrapes from NYTimes to Mongoose Database, if it has all 3 values
             if(title && link && summary) {
                 array.push({title: title, link: link, summary: summary})
                 var article = new Article({
@@ -49,6 +56,7 @@ app.get("/scrape",function(req,res){
 })
 
 
+//root route renders all articles in database (without clicking scape there are not articles)
 app.get("/",function(req,res){
     Article.find()
     .exec()
@@ -59,6 +67,9 @@ app.get("/",function(req,res){
     }) 
 })
 
+
+
+//clears all data, takes back to empty page
 app.get("/clear",function(req,res){
     Article.remove()
     .exec()
@@ -67,6 +78,8 @@ app.get("/clear",function(req,res){
     })
 })
 
+
+//route to see data (after immeadiate console and page reload) for testing/data purposes
 app.get("/all",function(req,res){
     Article.find()
     .exec()

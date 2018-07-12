@@ -1,5 +1,7 @@
 var mongoose = require("mongoose")
 
+// SETS UP MODEL FOR MONGOOSE DATABASE
+// CONNECT USING MONGOLAB
 var articleSchema = mongoose.Schema({
 
     title:String,

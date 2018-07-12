@@ -1,20 +1,39 @@
-<button id="scrape">SCRAPE</button>
+<button class="btn btn-success" id="scrape">SCRAPE</button>
 
+
+{{!-- beginning of handlebar loop each item var in server.js --}}
 {{#each items}}
 
    <h3>
-   {{title}} <button id="save" info="{{_id}}">SAVE</button></h3>
-   <p> 
+   
+   {{!-- title variable in server.js --}}
+   {{title}} 
+   
+   {{!-- info on button set to id of article, save id button changed saved boolean in database --}}
+   <button class="btn btn-info" id="save" info="{{_id}}">SAVE</button>
+   
+   </h3>
+
+    <p>
+
+   {{!-- link variable in server.js --}}     
    <a href="{{link}}">{{link}}</a>
    
    <br>
+
+   {{!-- summary variable in server.js --}}
    {{summary}}
+
    </p>
 
    
-
+{{!-- end of handlebar loop --}}
 {{/each}}
 
+
+
+
+{{!-- script for onclick events --}}
 <script>
     $("#scrape").on("click", function(){
         $.get("/scrape", function(response){
@@ -23,21 +42,32 @@
         })
     })
 
-//delegated event
+//delegated event for looping through same id with multiple values
+//saves article by changing boolean value to true (or false if already saved)
     $(document).on("click", "#save", function(){
 
             var id = $(this).attr("info")
 
             console.log(id)
+
+
         {{!-- $.get("/scrape", function(response){
             console.log(response)
             location.reload()
         }) --}}
+
     })
+
+
+
+//   * TO-DO *
+// pass the id from post request to a post route in your server
+// the post route in the server will take the id and update the article saved boolean
+// make another route at /saved that renders all saved articles (another handlebar page)
+// loop through and only display saved
+
+
 </script>
 
-{{!-- // pass the id from post request to a post route in your server
-// the post route in the server will take the id and update the article saved boolean
-//make another route at /saved that renders all saved articles (another handlebar page)
-//loop through and only display saved --}}
+
 
