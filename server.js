@@ -92,12 +92,16 @@ app.get("/all",function(req,res){
 
 
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongodbHOMEWORK";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://user123:user123@ds235431.mlab.com:35431/heroku_6v6678rp')";
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
+
+
+//.connect('mongodb://newuser123:newuser123@ds117701.mlab.com:17701/nyt_scraper')
+
 
 
 //listen port 3000
