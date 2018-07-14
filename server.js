@@ -100,7 +100,7 @@ app.get("/all",function(req,res){
 //mongoose.connect(MONGODB_URI);
 
 
-mongoose.connect('mongodb://<user123>:<user123>@ds235431.mlab.com:35431/heroku_6v6678rp')
+mongoose.connect('mongodb://user123:user123@ds235431.mlab.com:35431/heroku_6v6678rp')
 
 
 
