@@ -7,6 +7,8 @@
   <h5>Click below to scrape the New York Times Website. Save Favorites by clicking save button.</h5>
   <p class="lead">
     <a class="btn btn-success" id="scrape" role="button">SCRAPE</a>
+    <a class="btn btn-danger" id="clear" role="button">CLEAR</a>
+
   </p>
 </div>
 
@@ -23,6 +25,7 @@
    
    {{!-- info on button set to id of article, save id button changed saved boolean in database --}}
    <button class="btn btn-info" id="save" info="{{_id}}">SAVE</button>
+   
    
    </h3>
 
@@ -47,12 +50,26 @@
 
 {{!-- script for onclick events --}}
 <script>
+    {{!-- scrapes new york times --}}
     $("#scrape").on("click", function(){
         $.get("/scrape", function(response){
-            console.log(response)
             location.reload()
+            console.log(response)
+            
         })
     })
+
+    {{!-- clears page --}}
+     $("#clear").on("click", function(){
+        $.get("/clear", function(response){
+            location.reload()
+            console.log(response)
+            
+        })
+    })
+
+
+
 
 //delegated event for looping through same id with multiple values
 //saves article by changing boolean value to true (or false if already saved)

@@ -52,6 +52,7 @@ app.get("/scrape",function(req,res){
 
         })
         res.send(array)
+        console.log("array: /scrape: ---------------------------------------", array)
     }) 
 })
 
@@ -65,7 +66,7 @@ app.get("/",function(req,res){
             items:data
         })
     }) 
-})
+}) 
 
 
 
@@ -92,15 +93,15 @@ app.get("/all",function(req,res){
 
 
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
-//var MONGODB_URI = process.env.MONGODB_URI || "mongodb://user123:user123@ds235431.mlab.com:35431/heroku_6v6678rp')";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongodbHOMEWORK";
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
-//mongoose.Promise = Promise;
-//mongoose.connect(MONGODB_URI);
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI);
 
 
-mongoose.connect('mongodb://user123:user123@ds235431.mlab.com:35431/heroku_6v6678rp', {useNewUrlParser: true})
+//mongoose.connect('mongodb://user123:user123@ds235431.mlab.com:35431/heroku_6v6678rp', {useNewUrlParser: true})
 
 
 
